@@ -4,9 +4,13 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_main_content.*
 
 
 /**
@@ -39,6 +43,12 @@ class MainContentFragment : Fragment() {
         return inflater!!.inflate(R.layout.fragment_main_content, container, false)
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewPager.adapter = MenuPageAdapter(fragmentManager)
+        tab.setupWithViewPager(viewPager)
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         if (mListener != null) {
@@ -48,11 +58,11 @@ class MainContentFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            mListener = context
-        } else {
-            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
-        }
+//        if (context is OnFragmentInteractionListener) {
+//            mListener = context
+//        } else {
+//            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
+//        }
     }
 
     override fun onDetach() {
@@ -99,3 +109,19 @@ class MainContentFragment : Fragment() {
         }
     }
 }// Required empty public constructor
+class MenuPageAdapter(fm : FragmentManager) : FragmentPagerAdapter(fm) {
+
+    // 各ページの情報
+    override fun getItem(position: Int): Fragment {
+        return WebContentFragment.newInstance("","")
+    }
+
+    // ページ数
+    override fun getCount(): Int {
+        return 2
+    }
+
+    override fun getPageTitle(position: Int): CharSequence {
+        return "No." + position
+    }
+}

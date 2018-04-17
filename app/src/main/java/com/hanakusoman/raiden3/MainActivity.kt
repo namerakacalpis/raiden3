@@ -1,5 +1,6 @@
 package com.hanakusoman.raiden3
 
+import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -29,6 +30,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        var mainContentFragment = MainContentFragment.newInstance("", "")
+
+        supportFragmentManager.beginTransaction().replace(
+                R.id.fragment_container ,
+                mainContentFragment
+        ).commit()
+
     }
 
     override fun onBackPressed() {
